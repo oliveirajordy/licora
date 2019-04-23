@@ -97,16 +97,26 @@ export default class NewList extends Component {
 
     changeDefinition(id,e) {
         const listItems = this.state.listItems.map(item => { return { ...item } })
-
         const valueDigited = listItems[id].itemPrice
         const valueFloted = parseFloat(valueDigited)
         const changePassOne = (valueFloted === 0) ? true : !!valueFloted
-        const changePassTwo = valueDigited.toString().split(valueFloted)[1] ? false : true
+        let changePassTwo = valueDigited.toString().split(valueFloted)[1] === undefined ? true: false
+        console.log(changePassOne, changePassTwo, valueDigited.toString().split(valueFloted))
+        if(!changePassTwo){
+            console.log(changePassOne, changePassTwo, valueDigited.toString().split(valueFloted)[1])
+            let changePassReValidation = ''
+
+            valueDigited.toString().split('.').length <= 2 && 
+            valueDigited.toString().split('.').length > 1 &&
+            (changePassReValidation =  (valueDigited.toString().split('.')[1].split('').map(caracter => !isNaN(parseInt(caracter)))).reduce( (x, y) => x && y))
+
+            changePassTwo = changePassReValidation ? true : false
+        }
         const changePassTree = valueDigited.toString().includes(',') ? false : true
-        console.log(valueDigited, valueFloted)
-        console.log(changePassOne, changePassTwo, changePassTree)
+        const changePassFour = valueDigited.toString().split('')[0] === '.' ? false : true
         
-        if (changePassOne && changePassTwo &&  changePassTree) {
+        
+        if (changePassOne && changePassTwo &&  changePassTree && changePassFour) {
 
             listItems[id].defined = true
             listItems.push({ _id: (cont).toString(), itemName: '', itemPrice: 0, amount: 1, defided: false })

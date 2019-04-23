@@ -11,7 +11,7 @@ export default props => {
                 </div>
                 <div className="form-group col-3 mb-0">
                 <label htmlFor="amount">Quantidade</label>
-                    <input type="tel" pattern="^(0*[.]*[0-9][0-9]*([.][0-9]+)*|[0-9]?[.][0-9]*[1-9][0-9]*)$" title="Coloque uma quantidade valida" min="0" className="form-control" name="amount" min="0"
+                    <input type="tel" required pattern="/^(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/" title="Coloque uma quantidade valida" min="0" className="form-control" name="amount" min="0"
                         index={props.index} value={props.amount} onChange={e => props.functions[0](e)} />
                 </div>
                 <div className="form-group col-3 mb-0">
@@ -27,12 +27,12 @@ export default props => {
             <form className="form-row">
                 <div className="form-group col-7 mb-0">
                     <label htmlFor="itemName">Nome do Produto</label>
-                    <input type="text" className="form-control" name="itemName" index={props.index} placeholder="Nome do Produto"
+                    <input type="text" required className="form-control" name="itemName" index={props.index} placeholder="Nome do Produto"
                         value={props.itemName} onChange={e => props.functions[0](e)} />
                 </div>
                 <div className="form-group col-3 mb-0">
                     <label htmlFor="itemPrice">Preço</label>
-                    <input type="tel" pattern="^(0*[.]*[0-9][0-9]*([.][0-9]+)*|[0-9]?[.][0-9]*[1-9][0-9]*)$" title="Coloque um preço valido" min="0" className="form-control" name="itemPrice" index={props.index} placeholder="Preço do produto"
+                    <input type="tel" required pattern="/^(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/" title="Coloque um preço valido" min="0" className="form-control" name="itemPrice" index={props.index} placeholder="Preço do produto"
                         value={props.itemPrice} onChange={e => props.functions[0](e)} />
                 </div>
                 <div className="col-2 d-flex align-items-center justify-content-center">
