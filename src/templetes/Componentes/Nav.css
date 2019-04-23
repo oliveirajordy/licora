@@ -1,0 +1,28 @@
+.nav{
+    background: #c9dddf;
+}
+
+.nav a {
+    color: rgb(153, 153, 153);
+    text-decoration: none;
+    font-size: 1.7rem;
+    width: 50%;
+    height: 100%;
+    font-weight: bold;
+}
+
+.nav a:hover{
+    color: #fff;
+    background: linear-gradient(135deg, rgba(64,150,238,1) 50%,rgba(96,171,248,1) 20%,rgba(122,188,255,1) 50%);
+}
+
+.nav a.selected{
+    color: #fff;
+    background: linear-gradient(135deg, rgba(64,150,238,1) 0%,rgba(96,171,248,1) 56%,rgba(122,188,255,1) 100%);
+}
+
+@media(max-height: 400px){
+    .nav a {
+        font-size: 1.3rem;
+    }
+}

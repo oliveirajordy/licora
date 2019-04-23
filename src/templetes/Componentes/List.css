@@ -1,0 +1,12 @@
+.list button:focus{
+ box-shadow: none;
+ outline: none;
+}
+
+.list .button-bar{
+    width: 100%;
+}
+
+.button-bar button{
+    width: 35%;
+}

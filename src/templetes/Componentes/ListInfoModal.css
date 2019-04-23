@@ -1,0 +1,13 @@
+.listInfoModal{
+    display: block;
+    overflow-y: auto;
+    background: rgb(2, 2, 2, 0.5);
+}
+
+.listInfoModal .table td{
+    text-align: center;
+}
+
+.listInfoModal .table th{
+    text-align: center;
+}

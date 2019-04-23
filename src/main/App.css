@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background: yellowgreen;
+}
+
+.app{
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 10% 10% 80%;
+    grid-template-areas: "header" "nav" "main";
+    padding: 0;
+}
+
+
+
+.header {
+    grid-area: header;
+}
+
+.nav{
+    grid-area: nav;
+}
+
+.main {
+    grid-area: main;
+}
+
