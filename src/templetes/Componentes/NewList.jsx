@@ -88,7 +88,7 @@ export default class NewList extends Component {
         const currentAmount = this.state.listItems[element.getAttribute('index')].amount
         const itemPrice = this.state.listItems[element.getAttribute('index')].itemPrice
         let tempTotalPrice = this.state.totalPrice
-
+        
         tempTotalPrice = tempTotalPrice - (currentAmount * itemPrice)
         tempTotalPrice = tempTotalPrice + (newAmount * itemPrice)
 
@@ -100,23 +100,25 @@ export default class NewList extends Component {
         const valueDigited = listItems[id].itemPrice
         const valueFloted = parseFloat(valueDigited)
         const changePassOne = (valueFloted === 0) ? true : !!valueFloted
-        let changePassTwo = valueDigited.toString().split(valueFloted)[1] === undefined ? true: false
-        console.log(changePassOne, changePassTwo, valueDigited.toString().split(valueFloted))
+        let changePassTwo = (valueDigited.toString().split(valueFloted)[1] === undefined || 
+                                valueDigited.toString().split(valueFloted)[1] === "") ? true: false
         if(!changePassTwo){
-            console.log(changePassOne, changePassTwo, valueDigited.toString().split(valueFloted)[1])
             let changePassReValidation = ''
-
+            
             valueDigited.toString().split('.').length <= 2 && 
             valueDigited.toString().split('.').length > 1 &&
-            (changePassReValidation =  (valueDigited.toString().split('.')[1].split('').map(caracter => !isNaN(parseInt(caracter)))).reduce( (x, y) => x && y))
-
+            (changePassReValidation =  (valueDigited.toString().split('.')[1]
+                                            .split('').map(caracter => !isNaN(parseInt(caracter)))).reduce( (x, y) => x && y, true))
+            
             changePassTwo = changePassReValidation ? true : false
         }
         const changePassTree = valueDigited.toString().includes(',') ? false : true
         const changePassFour = valueDigited.toString().split('')[0] === '.' ? false : true
+        const changePassFive = this.state.listItems[id].itemName !== "" ? true : false
         
+        console.log(changePassOne, changePassTwo, changePassFour, changePassFive)
         
-        if (changePassOne && changePassTwo &&  changePassTree && changePassFour) {
+        if (changePassOne && changePassTwo &&  changePassTree && changePassFour && changePassFive) {
 
             listItems[id].defined = true
             listItems.push({ _id: (cont).toString(), itemName: '', itemPrice: 0, amount: 1, defided: false })
