@@ -115,9 +115,7 @@ export default class NewList extends Component {
         const changePassTree = valueDigited.toString().includes(',') ? false : true
         const changePassFour = valueDigited.toString().split('')[0] === '.' ? false : true
         const changePassFive = this.state.listItems[id].itemName !== "" ? true : false
-        
-        console.log(changePassOne, changePassTwo, changePassFour, changePassFive)
-        
+                
         if (changePassOne && changePassTwo &&  changePassTree && changePassFour && changePassFive) {
 
             listItems[id].defined = true

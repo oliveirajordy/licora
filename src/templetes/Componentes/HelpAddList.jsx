@@ -1,4 +1,5 @@
 import React from 'react'
+import Contact from './contact'
 
 export default props => {
 
@@ -11,5 +12,6 @@ export default props => {
                 durante a compra. </p>
             <h3>Faça sua primeira Lista de Compras clicando em <span>"Nova Compra"</span></h3>
         </div>
+        <Contact />
     )
 }
