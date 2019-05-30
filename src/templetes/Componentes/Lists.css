@@ -1,0 +1,21 @@
+.button-info{
+    position: fixed;
+    bottom: 3%;
+    right: 3%;
+    height: 50px;
+    font-weight: bold;
+}
+
+.button-info.white{
+    background: #fff;
+    color: black;
+}
+
+.button-info.blue{
+    background: #2989d8;
+    color: white;
+}
+
+.help-add-list span {
+    color: rgba(64,150,238)
+}

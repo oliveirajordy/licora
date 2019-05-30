@@ -9,6 +9,7 @@ import ListInfoModal from './ListInfoModal'
 
 const db = new DB('dbs')
 const initialState = { lists: [], modal: '' }
+let mainContentHelp = false
 
 export default class Lists extends Component {
 
@@ -18,6 +19,8 @@ export default class Lists extends Component {
         this.montarLists = this.montarLists.bind(this)
         this.listInfoClose = this.listInfoClose.bind(this)
         this.deleteList = this.deleteList.bind(this)
+        this.mountLists = this.mountLists.bind(this)
+        this.helpInfoButton = this.helpInfoButton.bind(this)
     }
 
     state = { ...initialState }
@@ -57,30 +60,45 @@ export default class Lists extends Component {
     montarLists(compras) {
         return compras.map(compra => {
             return (
-                <List local={compra.doc.local} 
-                    id={`_${compra.doc._id}`} 
+                <List local={compra.doc.local}
+                    id={`_${compra.doc._id}`}
                     listDate={compra.doc.listDate}
-                    totalPrice={compra.doc.totalPrice} 
+                    totalPrice={compra.doc.totalPrice}
                     totalItems={compra.doc.totalItems}
-                    paymentForm={compra.doc.paymentForm} 
+                    paymentForm={compra.doc.paymentForm}
                     functions={[this.listInfo, this.deleteList]}
-                    paymentDetails={compra.doc.paymentDetails} 
+                    paymentDetails={compra.doc.paymentDetails}
                     listDetails={compra.doc.listDetails} />
             )
         })
     }
 
-    componentWillMount() {
+    mountLists() {
         db.getAllDoc()
             .then((compras) => {
                 let lists = ''
                 if (compras.map) {
                     lists = this.montarLists(compras)
+                    mainContentHelp = false
                 } else {
                     lists = <HelpAddList />
+                    mainContentHelp = true
                 }
                 this.setState({ lists })
             })
+    }
+
+    componentWillMount() {
+        this.mountLists()
+    }
+
+    helpInfoButton() {
+        if (mainContentHelp) {
+            this.mountLists()
+        } else {
+            mainContentHelp = true
+            this.setState({ lists: <HelpAddList /> })
+        }
     }
 
     render() {
@@ -92,6 +110,7 @@ export default class Lists extends Component {
                 <div key="lists">
                     {this.state.lists}
                 </div>
+                <button className={`button-info ${mainContentHelp ? 'blue' : 'white'} btn`} onClick={this.helpInfoButton}>Sobre</button>
             </Main>
         )
     }

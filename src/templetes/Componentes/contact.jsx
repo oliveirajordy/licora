@@ -54,12 +54,12 @@ export default props => {
     }
 
     return (
-        <div className="container-fluid mb-3">
-            <div className="row justify-content-center">
-                <div className={`contact card p-1 mx-2 col-11 text-dark`} >
+        <div className="col-md-8 col-12 container-fluid p-0 mt-1">
+            <div className="row justify-content-center mx-1">
+                <div className={`contact card col-12 text-dark`} >
                     <div className="card-body p-1">
                         <h5 className="card-title">Fale Conosco</h5>
-                        <p className="card-text" >Lerkanji ainda esta em fase beta e aberto para diversas correções e adições de funcionalidade,
+                        <p className="card-text" >Licora ainda esta em fase beta e aberto para diversas correções e adições de funcionalidade,
                             ajude-nos reportando bugs, deixando sugestões ou dando sua opinião sobre o sistema.</p>
                         <div className="form">
                             <FormGroup type="text" name="name" placeHolder="Nome" value={formData.name} function={changeFild} />
