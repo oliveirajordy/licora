@@ -11,7 +11,7 @@ export default props => {
                 </div>
                 <div className="form-group col-3 mb-0">
                 <label htmlFor="amount">Quantidade</label>
-                    <input type="number" step="0.5" required title="Coloque uma quantidade valida" min="0" className="form-control" name="amount" min="0"
+                    <input type="number" step="0.5" required title="Coloque uma quantidade valida" min="0" className="form-control" name="amount"
                         index={props.index} value={props.amount} onChange={e => props.functions[0](e)} />
                 </div>
                 <div className="form-group col-3 mb-0">

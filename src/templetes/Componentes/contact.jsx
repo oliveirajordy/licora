@@ -49,8 +49,8 @@ export default props => {
             trueFormData.append(fild, formData[fild])
         }
 
-        axios.post('http://localhost:3001/contact', trueFormData)
-            .then(resp => console.log(resp))
+        axios.post('http://35.224.82.167:3001/contact', trueFormData)
+            .then(resp => console.log('x'))
     }
 
     return (
