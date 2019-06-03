@@ -16,6 +16,9 @@ class DB {
                     .then(resp => {
                         if (resp.total_rows > 0) {
                             const docs = resp.rows.map(doc => doc)
+                            docs.sort( (a,b) => {
+                                return (Date.parse(b.doc.listDate) - Date.parse(a.doc.listDate))
+                            })
                             resolve(docs)
                         } else {
                             resolve(resp)

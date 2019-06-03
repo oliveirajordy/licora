@@ -8,7 +8,6 @@ import Main from './Main'
 
 const initialState = {
     listItems: [{ _id: '0', itemName: '', itemPrice: 0, amount: 1, defined: false }],
-    listDate: new Date(),
     totalPrice: 0.0,
     compraPassOne: false,
     local: "",
@@ -33,21 +32,13 @@ export default class NewList extends Component {
         this.cancelNewList = this.cancelNewList.bind(this)
     }
 
-    state = { ...initialState }
+    state = { ...initialState, listDate: new Date(), }
 
     updateFile(event) {
         const id = event.target.getAttribute('index')
         const changeFild = event.target.name
         const value = event.target.value
         const tempListItems = this.state.listItems.map(item => { return { ...item } })
-
-        if (changeFild === 'amount' || changeFild === 'itemPrice') {
-            // const pontoOuVirgolaBoleam = ((value.split()
-            //     && (tempListItems[id][changeFild].includes('.') || tempListItems[id][changeFild].includes(','))))
-            // if (pontoOuVirgola) {
-            //     return
-            // }
-        }
 
         tempListItems[id][changeFild] = value
 

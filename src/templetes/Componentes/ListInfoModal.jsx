@@ -5,7 +5,7 @@ export default props => {
 
     const itemRow = props.items.map(item => {
         return (
-            <tr>
+            <tr key={item.doc.itemName}>
                 <td>{item.doc.itemName}</td>
                 <td>{item.doc.amount}</td>
                 <td>R${(item.doc.amount * item.doc.itemPrice).toFixed(2)}</td>
@@ -16,7 +16,7 @@ export default props => {
 
     return (
         <div className="blackGrou">
-            <div key='modal' className="listInfoModal modal fade show" id={props.listId} tabIndex="-1" role="dialog" aria-labelledby aria-hidden="true" >
+            <div key='modal' className="listInfoModal modal fade show" id={props.listId} tabIndex="-1" role="dialog" aria-hidden="true" >
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">

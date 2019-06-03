@@ -60,7 +60,8 @@ export default class Lists extends Component {
     montarLists(compras) {
         return compras.map(compra => {
             return (
-                <List local={compra.doc.local}
+                <List key={compra.doc._id} 
+                    local={compra.doc.local}
                     id={`_${compra.doc._id}`}
                     listDate={compra.doc.listDate}
                     totalPrice={compra.doc.totalPrice}
