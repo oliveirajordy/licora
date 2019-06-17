@@ -52,7 +52,7 @@ export default props => {
                 trueFormData.append(fild, formData[fild])
             }
 
-            axios.post('http://34.66.100.185:3002/contact', trueFormData)
+            axios.post('http://104.198.152.83:3002/contact', trueFormData)
                 .then(resp => 'x')
         } else {
             window.alert('Preecha os campoas para contato corretamente')
