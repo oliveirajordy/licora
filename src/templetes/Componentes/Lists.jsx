@@ -8,8 +8,7 @@ import Main from './Main'
 import ListInfoModal from './ListInfoModal'
 
 const db = new DB('dbs')
-const initialState = { lists: [], modal: '' }
-let mainContentHelp = false
+const initialState = { listState: false, modalState: false }
 
 export default class Lists extends Component {
 
@@ -25,14 +24,16 @@ export default class Lists extends Component {
 
     state = { ...initialState }
 
+    noState = { lists: '', modal: '' }
+
     listInfo(event) {
         const db_id = event.target.parentElement.id.split('_')[1]
         const dbList = new DB(db_id)
 
         dbList.getAllDoc()
             .then(resp => {
-                const modal = <ListInfoModal items={resp} listId={db_id} clickFun={this.listInfoClose} />
-                this.setState({ modal: modal })
+                this.noState.modal = <ListInfoModal items={resp} listId={db_id} clickFun={this.listInfoClose} />
+                this.setState({ modalState: true })
             })
     }
 
@@ -42,25 +43,23 @@ export default class Lists extends Component {
 
         dbs.deleteDb(db_id)
             .then(() => {
-                const filtedList = this.state.lists.filter(list => {
+                const filtedList = this.noState.lists.filter(list => {
                     return (list.props.id !== `_${db_id}`)
                 })
-                if (filtedList.length > 0) {
-                    this.setState({ lists: filtedList })
-                } else {
-                    this.setState({ lists: <HelpAddList /> })
-                }
+                filtedList.length <= 0 && this.setState({ listsState: false })
+
+                    
             })
     }
 
     listInfoClose() {
-        this.setState({ modal: '' })
+        this.setState({ modalState: false })
     }
 
     montarLists(compras) {
         return compras.map(compra => {
             return (
-                <List key={compra.doc._id} 
+                <List key={compra.doc._id}
                     local={compra.doc.local}
                     id={`_${compra.doc._id}`}
                     listDate={compra.doc.listDate}
@@ -77,15 +76,10 @@ export default class Lists extends Component {
     mountLists() {
         db.getAllDoc()
             .then((compras) => {
-                let lists = ''
                 if (compras.map) {
-                    lists = this.montarLists(compras)
-                    mainContentHelp = false
-                } else {
-                    lists = <HelpAddList />
-                    mainContentHelp = true
+                    this.lists = this.montarLists(compras)
+                    this.setState({ listState: true })
                 }
-                this.setState({ lists })
             })
     }
 
@@ -94,11 +88,10 @@ export default class Lists extends Component {
     }
 
     helpInfoButton() {
-        if (mainContentHelp) {
+        if (!this.state.listState) {
             this.mountLists()
         } else {
-            mainContentHelp = true
-            this.setState({ lists: <HelpAddList /> })
+            this.setState({ listState: false })
         }
     }
 
@@ -106,12 +99,12 @@ export default class Lists extends Component {
         return (
             <Main>
                 <div key="modal">
-                    {this.state.modal}
+                    {this.state.modalState && this.noState.modal}
                 </div>
                 <div key="lists">
-                    {this.state.lists}
+                    {this.state.listState ? this.noState.lists : <HelpAddList />}
                 </div>
-                <button className={`button-info ${mainContentHelp ? 'blue' : 'white'} btn`} onClick={this.helpInfoButton}>Sobre</button>
+                <button className={`button-info ${!this.state.listState ? 'blue' : 'white'} btn`} onClick={this.helpInfoButton}>Sobre</button>
             </Main>
         )
     }
