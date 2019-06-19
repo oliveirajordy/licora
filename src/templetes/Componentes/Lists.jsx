@@ -43,12 +43,10 @@ export default class Lists extends Component {
 
         dbs.deleteDb(db_id)
             .then(() => {
-                const filtedList = this.noState.lists.filter(list => {
+                this.noState.lists = this.noState.lists.filter(list => {
                     return (list.props.id !== `_${db_id}`)
                 })
-                filtedList.length <= 0 && this.setState({ listsState: false })
-
-                    
+                this.noState.lists.length <= 0 && this.setState({ listState: false })
             })
     }
 
@@ -77,7 +75,7 @@ export default class Lists extends Component {
         db.getAllDoc()
             .then((compras) => {
                 if (compras.map) {
-                    this.lists = this.montarLists(compras)
+                    this.noState.lists = this.montarLists(compras)
                     this.setState({ listState: true })
                 }
             })
