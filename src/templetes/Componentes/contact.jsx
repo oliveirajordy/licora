@@ -53,7 +53,7 @@ export default props => {
             }
 
             axios.post('http://35.198.5.158/contact', trueFormData)
-                .then(resp => 'x')
+                .catch(err => console.log(err))
         } else {
             window.alert('Preecha os campoas para contato corretamente')
         }
@@ -72,7 +72,12 @@ export default props => {
                             <FormGroup type="text" name="name" placeHolder="Nome" value={formData.name} function={changeFild} />
                             <FormGroup type="text" name="email" placeHolder="Email" value={formData.email} function={changeFild} />
                             <FormGroup type="text" name="assunto" placeHolder="Assunto" value={formData.Assunto} function={changeFild} />
-                            <textarea className="form-control mb-1" name="content" placeholder="Diga-nos algo" id="content" rows="3" value={formData.content} onChange={e => changeFild(e)} ></textarea>
+                            <textarea className="form-control mb-1"
+                                name="content"
+                                placeholder="Diga-nos algo"
+                                id="content" rows="3"
+                                value={formData.content}
+                                onChange={e => changeFild(e)}></textarea>
                             <FormGroup type="file" name="img" placeHolder="Imagem" value={formData.Assunto} function={changeFild} />
                         </div>
                         <button className="btn btn-success w-100" onClick={() => send()}>Enviar</button>

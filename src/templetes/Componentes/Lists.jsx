@@ -3,7 +3,7 @@ import 'bootstrap/js/dist/modal'
 import React, { Component } from 'react'
 import List from './List'
 import HelpAddList from './HelpAddList'
-import DB from '../../modules/db'
+import DB from '../../api/db'
 import Main from './Main'
 import ListInfoModal from './ListInfoModal'
 
@@ -26,15 +26,48 @@ export default class Lists extends Component {
 
     noState = { lists: '', modal: '' }
 
+    componentWillMount() {
+        this.mountLists()
+    }
+
+    montarLists(compras) {
+        return compras.map(compra => {
+            return (
+                <List key={compra._id}
+                    local={compra.local}
+                    id={`_${compra._id}`}
+                    listDate={compra.listDate}
+                    totalPrice={compra.totalPrice}
+                    totalItems={compra.totalItems}
+                    paymentForm={compra.paymentForm}
+                    functions={[this.listInfo, this.deleteList]}
+                    paymentDetails={compra.paymentDetails}
+                    listDetails={compra.listDetails} />
+            )
+        })
+    }
+
+    async mountLists() {
+        const compras = await db.getAllLists()
+        if (!!compras) {
+            this.noState.lists = this.montarLists(compras)
+            this.setState({ listState: true })
+        }
+    }
+
     listInfo(event) {
         const db_id = event.target.parentElement.id.split('_')[1]
         const dbList = new DB(db_id)
 
-        dbList.getAllDoc()
+        dbList.getAllLists()
             .then(resp => {
                 this.noState.modal = <ListInfoModal items={resp} listId={db_id} clickFun={this.listInfoClose} />
                 this.setState({ modalState: true })
             })
+    }
+
+    listInfoClose() {
+        this.setState({ modalState: false })
     }
 
     deleteList(event) {
@@ -44,45 +77,15 @@ export default class Lists extends Component {
         dbs.deleteDb(db_id)
             .then(() => {
                 this.noState.lists = this.noState.lists.filter(list => {
+                    console.log(list.props.id !== `_${db_id}`)
                     return (list.props.id !== `_${db_id}`)
                 })
-                this.noState.lists.length <= 0 && this.setState({ listState: false })
-            })
-    }
-
-    listInfoClose() {
-        this.setState({ modalState: false })
-    }
-
-    montarLists(compras) {
-        return compras.map(compra => {
-            return (
-                <List key={compra.doc._id}
-                    local={compra.doc.local}
-                    id={`_${compra.doc._id}`}
-                    listDate={compra.doc.listDate}
-                    totalPrice={compra.doc.totalPrice}
-                    totalItems={compra.doc.totalItems}
-                    paymentForm={compra.doc.paymentForm}
-                    functions={[this.listInfo, this.deleteList]}
-                    paymentDetails={compra.doc.paymentDetails}
-                    listDetails={compra.doc.listDetails} />
-            )
-        })
-    }
-
-    mountLists() {
-        db.getAllDoc()
-            .then((compras) => {
-                if (compras.map) {
-                    this.noState.lists = this.montarLists(compras)
+                if (this.noState.lists.length <= 0) {
+                    this.setState({ listState: false })
+                } else {
                     this.setState({ listState: true })
                 }
             })
-    }
-
-    componentWillMount() {
-        this.mountLists()
     }
 
     helpInfoButton() {

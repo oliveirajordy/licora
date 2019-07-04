@@ -1,10 +1,10 @@
 import './NewList.css'
 import React, { Component } from 'react'
-import NLIPass0 from './NLIPass0'
-import NLIPass1 from './NLIPass1'
-import DB from '../../modules/db'
+import DB from '../../api/db'
 import Main from './Main'
-// import update from 'react-addons-update'
+import ListControlBar from './ListControlBar'
+import NewListItems from './NewListItems'
+import FinishNewList from './FinishNewList'
 
 const initialState = {
     listItems: [{ _id: '0', itemName: '', itemPrice: 0, amount: 1, defined: false }],
@@ -23,9 +23,9 @@ export default class NewList extends Component {
     constructor(props) {
         super(props)
         this.changeDefinition = this.changeDefinition.bind(this)
-        this.updateFile = this.updateFile.bind(this)
+        this.updateFild = this.updateFild.bind(this)
         this.totalPriceChange = this.totalPriceChange.bind(this)
-        this.updateFileFinish = this.updateFileFinish.bind(this)
+        this.updateFildFinish = this.updateFildFinish.bind(this)
         this.changePass = this.changePass.bind(this)
         this.saveNewList = this.saveNewList.bind(this)
         this.validId = this.validId.bind(this)
@@ -34,7 +34,7 @@ export default class NewList extends Component {
 
     state = { ...initialState, listDate: new Date(), }
 
-    updateFile(event) {
+    updateFild(event) {
         const id = event.target.getAttribute('index')
         const changeFild = event.target.name
         const value = event.target.value
@@ -52,26 +52,14 @@ export default class NewList extends Component {
 
     }
 
-    updateFileFinish(event) {
+    updateFildFinish(event) {
         const changeFild = event.target.name
         const value = event.target.value
         let tempData = this.state[changeFild]
 
         tempData = value
 
-        switch (changeFild) {
-            case 'local': this.setState({ local: tempData })
-                break;
-            case 'paymentForm': this.setState({ paymentForm: tempData })
-                break;
-            case 'paymentDetails': this.setState({ paymentDetails: tempData })
-                break;
-            case 'listDetails': this.setState({ listDetails: tempData })
-                break;
-            default:
-                break;
-        }
-
+        this.setState({ [changeFild]: tempData })
     }
 
     totalPriceChange(element) {
@@ -79,35 +67,37 @@ export default class NewList extends Component {
         const currentAmount = this.state.listItems[element.getAttribute('index')].amount
         const itemPrice = this.state.listItems[element.getAttribute('index')].itemPrice
         let tempTotalPrice = this.state.totalPrice
-        
+
         tempTotalPrice = tempTotalPrice - (currentAmount * itemPrice)
         tempTotalPrice = tempTotalPrice + (newAmount * itemPrice)
 
         return tempTotalPrice
     }
 
-    changeDefinition(id,e) {
+    changeDefinition(id) {
         const listItems = this.state.listItems.map(item => { return { ...item } })
+
         const valueDigited = listItems[id].itemPrice
         const valueFloted = parseFloat(valueDigited)
+
         const changePassOne = (valueFloted === 0) ? true : !!valueFloted
-        let changePassTwo = (valueDigited.toString().split(valueFloted)[1] === undefined || 
-                                valueDigited.toString().split(valueFloted)[1] === "") ? true: false
-        if(!changePassTwo){
+        let changePassTwo = (valueDigited.toString().split(valueFloted)[1] === undefined ||
+            valueDigited.toString().split(valueFloted)[1] === "") ? true : false
+        if (!changePassTwo) {
             let changePassReValidation = ''
-            
-            valueDigited.toString().split('.').length <= 2 && 
-            valueDigited.toString().split('.').length > 1 &&
-            (changePassReValidation =  (valueDigited.toString().split('.')[1]
-                                            .split('').map(caracter => !isNaN(parseInt(caracter)))).reduce( (x, y) => x && y, true))
-            
+
+            valueDigited.toString().split('.').length <= 2 &&
+                valueDigited.toString().split('.').length > 1 &&
+                (changePassReValidation = (valueDigited.toString().split('.')[1]
+                    .split('').map(caracter => !isNaN(parseInt(caracter)))).reduce((x, y) => x && y, true))
+
             changePassTwo = changePassReValidation ? true : false
         }
         const changePassTree = valueDigited.toString().includes(',') ? false : true
         const changePassFour = valueDigited.toString().split('')[0] === '.' ? false : true
         const changePassFive = this.state.listItems[id].itemName !== "" ? true : false
-                
-        if (changePassOne && changePassTwo &&  changePassTree && changePassFour && changePassFive) {
+
+        if (changePassOne && changePassTwo && changePassTree && changePassFour && changePassFive) {
 
             listItems[id].defined = true
             listItems.push({ _id: (cont).toString(), itemName: '', itemPrice: 0, amount: 1, defided: false })
@@ -117,12 +107,12 @@ export default class NewList extends Component {
             cont++
 
             this.setState({ listItems, totalPrice: tp })
-            this.setState({ listItems})
         }
-
+        //tudo isso por não saber regex? talvez...
     }
 
     changePass() {
+        //pass === fazendo ou finalizando lista
         if (this.state.listItems.length > 1) {
             this.setState({ compraPassOne: !this.state.compraPassOne })
         }
@@ -152,10 +142,11 @@ export default class NewList extends Component {
             paymentDetails: this.state.paymentDetails,
             listDetails: this.state.listDetails
         }
+
         const list = this.state.listItems.filter(item => { return ((item.defined) && (item.amount > 0)) })
 
         dbs.saveDoc(doc, list)
-            .then(x => window.location.href = window.location.href.toString().split('/#/')[0] + '/#/')
+            .then(_ => window.location.href = window.location.href.toString().split('/#/')[0] + '/#/')
 
     }
 
@@ -168,21 +159,23 @@ export default class NewList extends Component {
         if (!this.state.compraPassOne) {
             return (
                 <Main>
-                    <NLIPass0 listItems={this.state.listItems}
-                        totalPrice={this.state.totalPrice}
-                        functions={[this.updateFile, this.changeDefinition, this.changePass, this.cancelNewList]} />
+                    <NewListItems listItems={this.state.listItems}
+                        functions={[this.updateFild, this.changeDefinition, this.changePass, this.cancelNewList]} />
+                    <ListControlBar totalPrice={this.state.totalPrice}
+                        functionCancel={this.cancelNewList}
+                        functionPass={this.changePass} />
                 </Main>
             )
         } else {
             return (
                 <Main>
-                    <NLIPass1 local={this.state.local}
+                    <FinishNewList local={this.state.local}
                         paymentForm={this.state.paymentForm}
                         listDate={this.state.listDate}
                         paymentDetails={this.state.paymentDetails}
                         listDetails={this.state.listDetails}
                         totalPrice={this.state.totalPrice}
-                        functions={[this.updateFileFinish, this.saveNewList, this.cancelNewList, this.changePass]} />
+                        functions={[this.updateFildFinish, this.saveNewList, this.cancelNewList, this.changePass]} />
                 </Main>
             )
         }

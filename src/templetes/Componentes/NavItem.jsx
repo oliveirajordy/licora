@@ -1,25 +1,15 @@
-import React, {useState} from 'react'
+import React from 'react'
 
 export default props => {
-    
-    let valid = '#'+ window.location.href.split('#')[1] === props.link
-    const [selected, setSelected] = useState(valid)
-    
-    window.onhashchange = e => {
-        if('#'+ window.location.href.split('#')[1] === props.link){
-            setSelected(true)
-            
-        } else {
-            setSelected(false)
-        }
-    }
+
+    const selected = `#${window.location.href.split('#')[1]}` === props.link
 
     return (
         <a className={`d-flex align-items-center justify-content-center ${selected ? 'selected' : ''}`}
-            
+
             href={props.link} >
             <span className="align-middle" >
-                {props.navPoint}
+                {props.label}
             </span>
         </a>
     )

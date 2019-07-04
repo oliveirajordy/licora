@@ -5,10 +5,10 @@ export default props => {
 
     const itemRow = props.items.map(item => {
         return (
-            <tr key={item.doc.itemName}>
-                <td>{item.doc.itemName}</td>
-                <td>{item.doc.amount}</td>
-                <td>R${(item.doc.amount * item.doc.itemPrice).toFixed(2)}</td>
+            <tr key={item.itemName}>
+                <td>{item.itemName}</td>
+                <td>{item.amount}</td>
+                <td>R${(item.amount * item.itemPrice).toFixed(2)}</td>
             </tr>
         )
 

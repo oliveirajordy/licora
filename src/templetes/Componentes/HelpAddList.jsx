@@ -8,10 +8,11 @@ export default props => {
         <div className="help-add-list">
             <div className="card p-2 m-1">
                 <h2>Licora - Lista de Compras Rapida</h2>
-                <p>Existem momentos que precisamos não de uma lista de compras planejada
+                <p>Licora é um aplicativo web simples para criação de lista de compras que precisão ser feita
+                    durante a compra.
+                    Existem momentos que precisamos não de uma lista de compras planejada
                     previamente, mas sim de uma lista para nos ajudar com uma compra onde a maioria dos itens
-                    precisam ser escolhidos na hora.O Licora é um aplicativo web simples para criação de lista de compras que precizão ser feita
-                durante a compra. </p>
+                    precisam ser escolhidos na hora, para esses momentos o Licora foi pensado</p>
 
             </div>
             <div className="row m-1">
