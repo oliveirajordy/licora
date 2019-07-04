@@ -12,4 +12,4 @@ Já a ideia 'Lista de Compras Rápida' surgiu de um problema real. Alguns parent
 
 Licora foi feito em Reactjs e a persistencia dos dados é feita no indexdDB dos navegadores usando a api do PouchDB. 
 
-Atualemte o Licora esta disponivel em um servidor no GoogleCloud e pode ser acessada pelo link: www.licora.online
+Atualmente o Licora esta disponível em um servidor feito em Nodejs no GoogleCloud e pode ser acessada pelo link: www.licora.online
