@@ -7,15 +7,15 @@ export default props => {
     const barr = urlCurrent === '/' ? 'selected' : ''
     const novaCompra = urlCurrent !== '/' ? 'selected' : ''
 
-    window.onhashchange = e => {
+    // window.onhashchange = e => {
             
-        const oldUrl = e.oldURL.split('#')[1]
-        const newUrl = e.newURL.split('#')[1]
-        const oldLink = document.querySelector(`.nav a[href='#${oldUrl}']`)
-        const newLink = document.querySelector(`.nav a[href='#${newUrl}']`)
-        oldLink && oldLink.classList.remove('selected')
-        newLink && newLink.classList.add('selected')
-    }
+    //     const oldUrl = e.oldURL.split('#')[1]
+    //     const newUrl = e.newURL.split('#')[1]
+    //     const oldLink = document.querySelector(`.nav a[href='#${oldUrl}']`)
+    //     const newLink = document.querySelector(`.nav a[href='#${newUrl}']`)
+    //     oldLink && oldLink.classList.remove('selected')
+    //     newLink && newLink.classList.add('selected')
+    // }
     
     return (
         <nav className="nav d-flex">

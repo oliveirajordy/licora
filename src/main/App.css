@@ -2,10 +2,6 @@
     box-sizing: border-box;
 }
 
-body{
-    background: yellowgreen;
-}
-
 .app{
     height: 100vh;
     display: grid;
@@ -14,8 +10,6 @@ body{
     grid-template-areas: "header" "nav" "main";
     padding: 0;
 }
-
-
 
 .header {
     grid-area: header;
