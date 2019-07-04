@@ -8,7 +8,7 @@ Esse web app surgiu da necessidade de praticas com reactjs e outras ferramentas;
 
 Já a ideia 'Lista de Compras Rápida' surgiu de um problema real. Alguns parentes e pessoas próximas possuem negócios próprios onde periodicamente fazem compras em grande quantidade, compras não predefinidas e que muito variam em relação a atual situação de quando esta sendo feita. Com o Licora eles podem registrar as compras, acompanhar elas enquanto estão fazendo(total final) e consultar elas a qualquer momento.
 
-#--------------
+##
 
 Licora foi feito em Reactjs e a persistencia dos dados é feita no indexdDB dos navegadores usando a api do PouchDB. 
 
